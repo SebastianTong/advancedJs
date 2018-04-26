@@ -1,34 +1,27 @@
-//Lecture: Passing functions as arguments
+// Immediately Invoked Functions Expressions. (IIFE)
 
-var years = [1990, 1965, 1937, 2005, 1998];
+//This first example works fine, but we dont necessarily need to give the function a name just to create data privacy.
 
-function arrayCalc(arr, fn) {
-    var arrRes = [];
-    for (var i = 0; i < arr.length; i++) {
-        arrRes.push(fn(arr[i]));
-    }
-    return arrRes;
+/*
+function game() {
+    var score = Math.random() * 10;
+    console.log(score >= 5);
 }
+game();
+*/
 
-function calculateAge(el) {
-    return 2018 - el;
-}
+//And now, the IIFE:
 
-function fullAge(el) {
-    return el >= 18;
-}
+(function() {
+    var score = Math.random()*10;
+    console.log(score >= 5);
+})();
 
-function maxHeartRate(el){
-    if(el >= 18 && el <= 81){
-        return Math.round(206.9 - (0.67 * el))
-    } else {
-        return -1;
-    }
-}
+//console.log(score);  this doesnt work ofc, because the variable is hidden from the global scope;
 
-var ages = arrayCalc(years, calculateAge);
-console.log(ages);
-var fullAges = arrayCalc(ages, fullAge);
-console.log(fullAges);
-var heartRate = arrayCalc(ages, maxHeartRate);
-console.log(heartRate);
+//We can also pass parameters into the function, like this:
+
+(function(goodLuck) {
+    var score = Math.random()*10;
+    console.log(score >= 5 - goodLuck);
+})(5);
