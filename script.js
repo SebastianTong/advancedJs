@@ -1,27 +1,22 @@
-// Immediately Invoked Functions Expressions. (IIFE)
-
-//This first example works fine, but we dont necessarily need to give the function a name just to create data privacy.
+// Lecture: Closures
 
 /*
-function game() {
-    var score = Math.random() * 10;
-    console.log(score >= 5);
+
+function retirement(retirementAge) {
+    var a = ' years until retirement.';
+    return function(yearOfBirth){
+        var age = 2018 - yearOfBirth;
+        console.log((retirementAge - age) + a);
+    }
 }
-game();
+
+var retirementUS = retirement(66);
+var retirementGermany = retirement(65);
+var retirementIceland = retirement(67);
+
+retirementGermany(1990);
+retirementUS(1990);
+retirementIceland(1990);
+
 */
 
-//And now, the IIFE:
-
-(function() {
-    var score = Math.random()*10;
-    console.log(score >= 5);
-})();
-
-//console.log(score);  this doesnt work ofc, because the variable is hidden from the global scope;
-
-//We can also pass parameters into the function, like this:
-
-(function(goodLuck) {
-    var score = Math.random()*10;
-    console.log(score >= 5 - goodLuck);
-})(5);
