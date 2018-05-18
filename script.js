@@ -1,36 +1,62 @@
-var john = {
-    name: 'John',
-    age: 26,
-    job: 'teacher',
-    presentation: function (style, timeOfDay) {
-        if (style === 'formal') {
-            console.log('Good ' + timeOfDay + ' ladies and gentlemen! I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old.');
-        } else if (style === 'friendly') {
-            console.log('Hey! What\'s up? I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' + timeOfDay + '.');
+(function() {
+
+    function Question(question, answers, correct){
+        this.question = question;
+        this.answers = answers;
+        this.correct = correct;
+    };
+    
+    Question.prototype.displayQuestion = function(){
+        console.log(this.question);
+    
+        for (var i = 0; i < this.answers.length; i++) {
+            console.log(i + ': ' + this.answers[i]);
+        }
+    };
+    
+    Question.prototype.checkAnswer = function(ans){
+        if(ans === this.correct){
+            console.log('Correct answer!');
+        } else {
+            console.log('Wrong answer! Try again.');
         }
     }
-};
+    
+    
+    var q1 = new Question('What is the name of the current student?', ['Jane', 'Brad', 'Seba'], 2);
+    var q2 = new Question('How old is the current student?', [23, 35, 16], 0);
+    var q3 = new Question('What is the current stundent\'s favourite food?', ['bbq', 'tacos', 'sushi'], 2);
+    
+    var questions = [q1, q2, q3];
 
-john.presentation('formal', 'morning');
+    function score (){
+        var sc = 0;
+        return function(correct){
+            if (correct){
+                sc++;
+            }
+            return score;
+        }
+    }
+    
+var keepScore = score();
 
-var emily = {
-    name: 'Emily',
-    age: 35,
-    job: 'designer'
-};
+    function nextQuestion(){
+        var random = Math.floor(Math.random() * questions.length);
+    
+         questions[random].displayQuestion();
+    
+        var answer = prompt('Please select the correct answer.');
+    
+        if(answer !== 'exit') {
+            questions[random].checkAnswer(parseInt(answer));
+            
+            nextQuestion();
+        }
+    }
+    
+    nextQuestion();
 
-john.presentation.call(emily, 'friendly', 'afternoon');
+})()
 
-// john.presentation.apply(emily,['friendly', 'afternoon']);
-//This is the apply method with allows parameters such as arrays.
 
-var johnFriendly = john.presentation.bind(john, 'friendly');
-
-johnFriendly('morning');
-johnFriendly('night');
-
-var emilyFormal = john.presentation.bind(emily, 'formal');
-
-emilyFormal('afternoon');
-
-//This up here is the bind method, which returns a function, so you can preset some parameters.
